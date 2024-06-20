@@ -1,8 +1,7 @@
 import React, { useContext } from "react";
 import { AiFillPlayCircle } from "react-icons/ai";
 import { SiEthereum } from "react-icons/si";
-import { BsInfoCircle } from "react-icons/bs";
-
+import { AiOutlineReload } from "react-icons/ai";
 import { TransactionContext } from "../context/TransactionContext";
 import { shortenAddress } from "../utils/shortenAddress";
 import { Loader } from ".";
@@ -28,6 +27,7 @@ const Welcome = () => {
     balanceInUSD,
     balanceInNGN,
     connectWallet,
+    disconnectWallet,
     handleChange,
     sendTransaction,
     formData,
@@ -35,11 +35,11 @@ const Welcome = () => {
   } = useContext(TransactionContext);
 
   const handleSubmit = (e) => {
-    const { addressTo, amount, keyword, message } = formData;
+    const { addressTo, amount, message } = formData;
 
     e.preventDefault();
 
-    if (!addressTo || !amount || !keyword || !message) return;
+    if (!addressTo || !amount || !message) return;
 
     sendTransaction();
   };
@@ -55,7 +55,7 @@ const Welcome = () => {
             Explore the crypto world. Buy and sell cryptocurrencies easily on
             CrossPay.
           </p>
-          {!currentAccount && (
+          {!currentAccount ? (
             <button
               type="button"
               onClick={connectWallet}
@@ -64,6 +64,17 @@ const Welcome = () => {
               <AiFillPlayCircle className="text-white mr-2" />
               <p className="text-white text-base font-semibold">
                 Connect Wallet
+              </p>
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={disconnectWallet}
+              className="flex flex-row justify-center items-center my-5 bg-[#e32929] p-3 rounded-full cursor-pointer hover:bg-[#bd2929]"
+            >
+              <AiFillPlayCircle className="text-white mr-2" />
+              <p className="text-white text-base font-semibold">
+                Disconnect Wallet
               </p>
             </button>
           )}
@@ -93,7 +104,12 @@ const Welcome = () => {
                 <div className="w-10 h-10 rounded-full border-2 border-white flex justify-center items-center">
                   <SiEthereum fontSize={21} color="#fff" />
                 </div>
-                <BsInfoCircle fontSize={17} color="#fff" />
+                <div
+                  onClick={() => window.location.reload()}
+                  className="mt-2 mr-2 text-white"
+                >
+                  <AiOutlineReload fontSize={21}/>
+                </div>
               </div>
               <div>
                 <p className="text-white font-light text-sm">
@@ -108,7 +124,6 @@ const Welcome = () => {
                 <p className="text-white font-light text-sm">
                   Balance: {balanceInNGN} NGN
                 </p>
-                <p className="text-white font-semibold text-lg">Ethereum</p>
               </div>
             </div>
           </div>

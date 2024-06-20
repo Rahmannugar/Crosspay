@@ -23,7 +23,6 @@ export const TransactionsProvider = ({ children }) => {
   const [formData, setformData] = useState({
     addressTo: "",
     amount: "",
-    keyword: "",
     message: "",
   });
   const [currentAccount, setCurrentAccount] = useState("");
@@ -56,7 +55,6 @@ export const TransactionsProvider = ({ children }) => {
               transaction.timestamp.toNumber() * 1000
             ).toLocaleString(),
             message: transaction.message,
-            keyword: transaction.keyword,
             amount: parseInt(transaction.amount._hex) / 10 ** 18,
           })
         );
@@ -137,10 +135,26 @@ export const TransactionsProvider = ({ children }) => {
     }
   };
 
+  const disconnectWallet = async () => {
+    try {
+      setCurrentAccount("");
+      setCurrentBalance("");
+      setBalanceInUSD("");
+      setBalanceInNGN("");
+      window.localStorage.removeItem("currentAccount");
+      window.localStorage.removeItem("transactionCount");
+      alert("Wallet disconnected");
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+      throw new Error("Error disconnecting wallet");
+    }
+  };
+
   const sendTransaction = async () => {
     try {
       if (ethereum) {
-        const { addressTo, amount, keyword, message } = formData;
+        const { addressTo, amount, message } = formData;
         const transactionsContract = createEthereumContract();
         const parsedAmount = ethers.utils.parseEther(amount);
 
@@ -150,7 +164,7 @@ export const TransactionsProvider = ({ children }) => {
             {
               from: currentAccount,
               to: addressTo,
-              gas: "0x5208",
+              gas: "0x5208", // 21000 Gwei
               value: parsedAmount._hex,
             },
           ],
@@ -159,8 +173,7 @@ export const TransactionsProvider = ({ children }) => {
         const transactionHash = await transactionsContract.addToBlockchain(
           addressTo,
           parsedAmount,
-          message,
-          keyword
+          message
         );
 
         setIsLoading(true);
@@ -173,12 +186,14 @@ export const TransactionsProvider = ({ children }) => {
           await transactionsContract.getTransactionCount();
 
         setTransactionCount(transactionsCount.toNumber());
+        alert("Transaction successful!");
         window.location.reload();
       } else {
         console.log("No ethereum object");
       }
     } catch (error) {
       console.log(error);
+      alert("Transaction failed. Please try again.");
       throw new Error("No ethereum object");
     }
   };
@@ -193,6 +208,7 @@ export const TransactionsProvider = ({ children }) => {
       value={{
         transactionCount,
         connectWallet,
+        disconnectWallet,
         transactions,
         currentAccount,
         currentBalance,
