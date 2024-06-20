@@ -24,6 +24,9 @@ const Input = ({ placeholder, name, type, value, handleChange }) => (
 const Welcome = () => {
   const {
     currentAccount,
+    currentBalance,
+    balanceInUSD,
+    balanceInNGN,
     connectWallet,
     handleChange,
     sendTransaction,
@@ -96,9 +99,16 @@ const Welcome = () => {
                 <p className="text-white font-light text-sm">
                   {shortenAddress(currentAccount)}
                 </p>
-                <p className="text-white font-semibold text-lg mt-1">
-                  Ethereum
+                <p className="text-white font-light text-sm">
+                  Balance: {currentBalance} ETH
                 </p>
+                <p className="text-white font-light text-sm">
+                  Balance: {balanceInUSD} USD
+                </p>
+                <p className="text-white font-light text-sm">
+                  Balance: {balanceInNGN} NGN
+                </p>
+                <p className="text-white font-semibold text-lg">Ethereum</p>
               </div>
             </div>
           </div>
@@ -113,12 +123,6 @@ const Welcome = () => {
               placeholder="Amount (ETH)"
               name="amount"
               type="number"
-              handleChange={handleChange}
-            />
-            <Input
-              placeholder="Keyword (Gif)"
-              name="keyword"
-              type="text"
               handleChange={handleChange}
             />
             <Input
