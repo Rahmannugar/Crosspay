@@ -5,14 +5,14 @@ import { RiHeart2Fill } from "react-icons/ri";
 
 const ServiceCard = ({ color, title, icon, subtitle }) => (
   <div className="flex flex-row justify-start items-start white-glassmorphism p-3 m-2 cursor-pointer hover:shadow-xl">
-    <div className={`w-10 h-10 rounded-full flex justify-center items-center ${color}`}>
+    <div
+      className={`w-10 h-10 rounded-full flex justify-center items-center ${color}`}
+    >
       {icon}
     </div>
     <div className="ml-5 flex flex-col flex-1">
       <h3 className="mt-2 text-white text-lg">{title}</h3>
-      <p className="mt-1 text-white text-sm md:w-9/12">
-        {subtitle}
-      </p>
+      <p className="mt-1 text-white text-sm md:w-9/12">{subtitle}</p>
     </div>
   </div>
 );
@@ -37,19 +37,19 @@ const Services = () => (
           color="bg-[#2952E3]"
           title="Security"
           icon={<BsShieldFillCheck fontSize={21} className="text-white" />}
-          subtitle="Security is guranteed. We always maintain privacy and maintain the quality of our products"
+          subtitle="Security is guaranteed, as we prioritize the privacy and confidentiality of all transactions. Our commitment to quality ensures that every exchange is handled with precision and care, providing you with a seamless and trustworthy experience every time."
         />
         <ServiceCard
           color="bg-[#8945F8]"
           title="Best exchange rates"
           icon={<BiSearchAlt fontSize={21} className="text-white" />}
-          subtitle="Security is guranteed. We always maintain privacy and maintain the quality of our products"
+          subtitle="At our service, we offer the best exchange rates for cryptocurrency to ensure you get the most value for your digital assets."
         />
         <ServiceCard
           color="bg-[#F84550]"
           title="Fastest transactions"
           icon={<RiHeart2Fill fontSize={21} className="text-white" />}
-          subtitle="Security is guranteed. We always maintain privacy and maintain the quality of our products"
+          subtitle="With the fastest transactions in the market, you can complete your exchanges swiftly and efficiently. "
         />
       </div>
     </div>
