@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { HiMenuAlt4 } from "react-icons/hi";
 import { AiOutlineClose } from "react-icons/ai";
 
 import logo from "../../images/Crosspay-Logo.svg";
+import { TransactionContext } from "../context/TransactionContext";
 
 const NavBarItem = ({ title, link, classprops }) => (
   <li className={`mx-4 cursor-pointer ${classprops}`}>
@@ -12,11 +13,15 @@ const NavBarItem = ({ title, link, classprops }) => (
 
 const Navbar = () => {
   const [toggleMenu, setToggleMenu] = React.useState(false);
+  const { currentAccount } = useContext(TransactionContext);
 
   const navItems = [
     { title: "Live Feed", link: "https://cryptrackersite.netlify.app" },
     { title: "Exchange", link: "https://app.uniswap.org/swap?chain=sepolia" },
-    { title: "Tracker", link: "https://sepolia.etherscan.io/" },
+    {
+      title: "Tracker",
+      link: `https://sepolia.etherscan.io/address/${currentAccount}`,
+    },
     { title: "Deposit/Withdraw", link: "#" },
   ];
 

@@ -39,7 +39,10 @@ const Welcome = () => {
 
     e.preventDefault();
 
-    if (!addressTo || !amount || !message) return;
+    if (!addressTo || !amount || !message) {
+      alert("Please fill in all fields.");
+      return;
+    }
 
     sendTransaction();
   };
@@ -108,7 +111,7 @@ const Welcome = () => {
                   onClick={() => window.location.reload()}
                   className="mt-2 mr-2 text-white"
                 >
-                  <AiOutlineReload fontSize={21}/>
+                  <AiOutlineReload fontSize={21} />
                 </div>
               </div>
               <div>
