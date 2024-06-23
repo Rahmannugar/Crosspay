@@ -156,25 +156,27 @@ export const TransactionsProvider = ({ children }) => {
         const transactionsContract = createEthereumContract();
         const parsedAmount = ethers.utils.parseEther(amount);
 
-        console.log("Initiating transaction...");
+        alert("Initiating transaction...");
 
-        const txParams = {
-          from: currentAccount,
-          to: addressTo,
-          gas: "0x5208", // 21000 Gwei
-          value: parsedAmount._hex,
-        };
-
-        // Send transaction
+        // Send ETH transaction
         const txHash = await ethereum.request({
           method: "eth_sendTransaction",
-          params: [txParams],
+          params: [
+            {
+              from: currentAccount,
+              to: addressTo,
+              gas: "0x5208", // 21000 Gwei
+              value: parsedAmount._hex,
+            },
+          ],
         });
 
         console.log(`Transaction sent: ${txHash}`);
 
-        // Assuming the contract method `addToBlockchain` expects four arguments
-        const keyword = "sent"; // Add a default or appropriate value for the fourth argument
+        // Here we assume the fourth argument as 'keyword' or any appropriate value
+        const keyword = "default_keyword"; // Adjust this as per your contract requirements
+
+        // Call addToBlockchain on the smart contract
         const transactionHash = await transactionsContract.addToBlockchain(
           addressTo,
           parsedAmount,
@@ -182,8 +184,9 @@ export const TransactionsProvider = ({ children }) => {
           keyword // Fourth argument added here
         );
 
-        setIsLoading(true);
         console.log(`Transaction hash: ${transactionHash.hash}`);
+
+        setIsLoading(true);
 
         // Wait for the transaction to be mined
         await transactionHash.wait();
@@ -191,13 +194,20 @@ export const TransactionsProvider = ({ children }) => {
         console.log(`Transaction mined: ${transactionHash.hash}`);
         setIsLoading(false);
 
-        // Update state and notify user
-        const transactionsCount =
-          await transactionsContract.getTransactionCount();
-        setTransactionCount(transactionsCount.toNumber());
-        getAllTransactions();
-        getBalance(currentAccount);
-        alert("Transaction successful!");
+        try {
+          // Update state and notify user
+          const transactionsCount =
+            await transactionsContract.getTransactionCount();
+          setTransactionCount(transactionsCount.toNumber());
+          await getAllTransactions();
+          await getBalance(currentAccount);
+
+          alert("Transaction successful!");
+          window.location.reload();
+        } catch (getTransactionCountError) {
+          alert("Transaction successful");
+          window.location.reload();
+        }
       } else {
         console.log("No ethereum object");
       }
