@@ -236,6 +236,7 @@ export const TransactionsProvider = ({ children }) => {
         balanceInNGN,
         isLoading,
         sendTransaction,
+        getAllTransactions,
         handleChange,
         formData,
       }}

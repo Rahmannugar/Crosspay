@@ -1,4 +1,5 @@
 import { Navbar, Welcome, Services, Transactions } from "./components";
+import TransactionsPage from "./components/TransactionsPage";
 
 const App = () => (
   <div className="min-h-screen">
@@ -7,7 +8,7 @@ const App = () => (
       <Welcome />
     </div>
     <Services />
-    <Transactions />
+    <TransactionsPage />
   </div>
 );
 
