@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { HiMenuAlt4 } from "react-icons/hi";
 import { AiOutlineClose } from "react-icons/ai";
 
-import logo from "../../images/Crosspay-Logo.svg";
+import logo from "../images/Crosspay-Logo.svg";
 import { TransactionContext } from "../context/TransactionContext";
 
 const NavBarItem = ({ title, link, classprops }) => (
@@ -22,7 +22,8 @@ const Navbar = () => {
       title: "Tracker",
       link: `https://sepolia.etherscan.io/address/${currentAccount}`,
     },
-    { title: "Deposit/Withdraw", link: "#" },
+    { title: "Deposit", link: "/deposit" },
+    { title: "Withdraw", link: "#" },
   ];
 
   return (

@@ -12,11 +12,14 @@
     "axios": "^1.7.2",
     "eth-revert-reason": "^1.0.3",
     "ethers": "^5.5.1",
+    "firebase": "^10.12.2",
     "framer-motion": "^5.3.1",
     "postcss": "^8.3.11",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
-    "react-icons": "^4.3.1"
+    "react-icons": "^4.3.1",
+    "react-router-dom": "^6.24.0",
+    "sweetalert": "^2.1.2"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^1.0.0",
